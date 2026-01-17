@@ -1,5 +1,108 @@
 package com.edutech.progressive.entity;
 
+// import javax.annotation.GeneratedValue;
+// import javax.persistence.Entity;
+// import javax.persistence.Id;
+
+// @Entity
 public class Cricketer {
+    // @Id
+    // @GeneratedValue(strategy=GeneratedType.IN)
+    private int cricketerId;
+    private String cricketerName;
+    private String nationality;
+    private String role;
+    private int totalWickets;
+    private int teamId;
+    private int age;
+    private int experience;
+
+    public Cricketer() {
+    }
+    
+
+    public Cricketer(int cricketerId,String cricketerName, String nationality, String role, int totalWickets, int teamId, int age,
+            int experience) {
+        this.cricketerId = cricketerId;
+        this.cricketerName = cricketerName;
+        this.nationality = nationality;
+        this.role = role;
+        this.totalWickets = totalWickets;
+        this.teamId = teamId;
+        this.age = age;
+        this.experience = experience;
+    }
+
+    public int getCricketerId() {
+        return cricketerId;
+    }
+
+    public void setCricketerId(int cricketerId) {
+        this.cricketerId = cricketerId;
+    }
+
+    public String getCricketerName() {
+        return cricketerName;
+    }
+
+    public void setCricketerName(String cricketerName) {
+        this.cricketerName = cricketerName;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public int getTotalWickets() {
+        return totalWickets;
+    }
+
+    public void setTotalWickets(int totalWickets) {
+        this.totalWickets = totalWickets;
+    }
+
+
+    public int getTeamId() {
+        return teamId;
+    }
+
+
+    public void setTeamId(int teamId) {
+        this.teamId = teamId;
+    }
+
+
+    public int getAge() {
+        return age;
+    }
+
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+
+    public int getExperience() {
+        return experience;
+    }
+
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    
 
 }

@@ -1,5 +1,97 @@
 package com.edutech.progressive.entity;
 
+import java.util.Date;
+
+// import javax.persistence.Entity;
+
+// @Entity
 public class Match {
+    private int matchId;
+    private int firstTeamId;
+    private int secondTeamId;
+    private Date matchDate;
+    private String result;
+    private String venue;
+    private String status;
+    private int winnerTeamId;
+
+    public Match() {
+    }
+
+    public Match(int matchId, int firstTeamId, int secondTeamId, Date matchDate, String result, String venue,
+            String status, int winnerTeamId) {
+        this.matchId = matchId;
+        this.firstTeamId = firstTeamId;
+        this.secondTeamId = secondTeamId;
+        this.matchDate = matchDate;
+        this.result = result;
+        this.venue = venue;
+        this.status = status;
+        this.winnerTeamId = winnerTeamId;
+    }
+
+    public int getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(int matchId) {
+        this.matchId = matchId;
+    }
+
+    public int getFirstTeamId() {
+        return firstTeamId;
+    }
+
+    public void setFirstTeamId(int firstTeamId) {
+        this.firstTeamId = firstTeamId;
+    }
+
+    public int getSecondTeamId() {
+        return secondTeamId;
+    }
+
+    public void setSecondTeamId(int secondTeamId) {
+        this.secondTeamId = secondTeamId;
+    }
+
+    public Date getMatchDate() {
+        return matchDate;
+    }
+
+    public void setMatchDate(Date matchDate) {
+        this.matchDate = matchDate;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public String getVenue() {
+        return venue;
+    }
+
+    public void setVenue(String venue) {
+        this.venue = venue;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getWinnerTeamId() {
+        return winnerTeamId;
+    }
+
+    public void setWinnerTeamId(int winnerTeamId) {
+        this.winnerTeamId = winnerTeamId;
+    }
 
 }
