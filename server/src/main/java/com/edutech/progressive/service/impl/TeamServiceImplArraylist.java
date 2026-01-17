@@ -1,6 +1,7 @@
 package com.edutech.progressive.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.edutech.progressive.entity.Team;
@@ -16,11 +17,18 @@ public class TeamServiceImplArraylist implements TeamService {
 
     @Override
     public int addTeam(Team team) {
-        return -1;
+        teams.add(team);
+        return teams.size();
     }
 
     @Override
     public List<Team> getAllTeamsSortedByName() {
+        Collections.sort(teams);
         return teams;
+    }
+
+    public void emptyArrayList() {
+        TeamService.super.emptyArrayList();
+        teams = new ArrayList<>();
     }
 }
