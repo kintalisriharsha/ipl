@@ -1,5 +1,6 @@
 package com.edutech.progressive.entity;
 // import javax.annotation.GeneratedValue;
+
 // import javax.persistence.Entity;
 // import javax.persistence.Id;
 
@@ -15,13 +16,13 @@ public class Cricketer implements Comparable<Cricketer> {
     private int teamId;
     private int age;
     private int experience;
+    private int total_runs;
 
     public Cricketer() {
     }
 
-    public Cricketer(int cricketerId, String cricketerName, String nationality, String role, int totalWickets,
-            int teamId, int age,
-            int experience) {
+    public Cricketer(int cricketerId, int teamId, String cricketerName, int age, String nationality, int experience,
+            String role, int totalRuns, int totalWickets) {
         this.cricketerId = cricketerId;
         this.cricketerName = cricketerName;
         this.nationality = nationality;
@@ -30,6 +31,7 @@ public class Cricketer implements Comparable<Cricketer> {
         this.teamId = teamId;
         this.age = age;
         this.experience = experience;
+        this.total_runs = totalRuns;
     }
 
     public int getCricketerId() {
@@ -99,6 +101,14 @@ public class Cricketer implements Comparable<Cricketer> {
     @Override
     public int compareTo(Cricketer o) {
         return Integer.compare(this.getExperience(), o.getExperience());
+    }
+
+    public int getTotal_runs() {
+        return total_runs;
+    }
+
+    public void setTotal_runs(int total_runs) {
+        this.total_runs = total_runs;
     }
 
 }
