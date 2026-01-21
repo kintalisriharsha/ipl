@@ -1,6 +1,7 @@
 package com.edutech.progressive.service.impl;
 
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,12 @@ import com.edutech.progressive.service.TeamService;
 @Service
 public class TeamServiceImplJpa implements TeamService {
 
-    @Autowired
     private TeamRepository teamRepository;
-    // public TeamServiceImplJpa(TeamRepository teamRepository) {
-    //     this.teamRepository = teamRepository;
-    // }
+    
+    @Autowired
+    public TeamServiceImplJpa(TeamRepository teamRepository) {
+        this.teamRepository = teamRepository;
+    }
 
     @Override
     public List<Team> getAllTeams() throws SQLException {
@@ -32,7 +34,9 @@ public class TeamServiceImplJpa implements TeamService {
 
     @Override
     public List<Team> getAllTeamsSortedByName() throws SQLException {
-        return teamRepository.findAllByOrderByTeamName();
+        List<Team> teams = getAllTeams();
+        teams.sort(Comparator.comparing(Team::getTeamName));
+        return teams;
     }
 
     public Team getTeamById(int teamId) throws SQLException {
