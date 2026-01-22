@@ -38,16 +38,16 @@ public class MatchServiceImplJpa implements MatchService{
 
     @Override
     public void updateMatch(Match match) throws SQLException {
-        Match matchDetails = getMatchById(match.getMatchId());
-        matchDetails.setMatchId(match.getMatchId());
-        matchDetails.setFirstTeamId(match.getFirstTeamId());
-        matchDetails.setSecondTeamId(match.getSecondTeamId());
-        matchDetails.setMatchDate(match.getMatchDate());
-        matchDetails.setVenue(match.getVenue());
-        matchDetails.setResult(match.getResult());
-        matchDetails.setStatus(match.getStatus());
-        matchDetails.setWinnerTeamId(match.getWinnerTeamId());
-        matchRepository.save(matchDetails);
+        // Match matchDetails = getMatchById(match.getMatchId());
+        // matchDetails.setMatchId(match.getMatchId());
+        // matchDetails.setFirstTeamId(match.getFirstTeam().getTeamId());
+        // matchDetails.setSecondTeamId(match.getSecondTeamId());
+        // matchDetails.setMatchDate(match.getMatchDate());
+        // matchDetails.setVenue(match.getVenue());
+        // matchDetails.setResult(match.getResult());
+        // matchDetails.setStatus(match.getStatus());
+        // matchDetails.setWinnerTeamId(match.getWinnerTeamId());
+        matchRepository.save(match);
     }
 
     @Override

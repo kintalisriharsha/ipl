@@ -5,6 +5,9 @@ import com.edutech.progressive.entity.Cricketer;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
+
 public interface CricketerService {
 
     List<Cricketer> getAllCricketers() throws SQLException;

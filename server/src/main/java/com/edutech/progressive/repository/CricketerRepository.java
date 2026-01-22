@@ -2,12 +2,21 @@ package com.edutech.progressive.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.core.CrudMethods;
 
 import com.edutech.progressive.entity.Cricketer;
 
 public interface CricketerRepository extends JpaRepository<Cricketer, Integer> {
-    List<Cricketer> findAllByOrderByExperienceAsc();
-    List<Cricketer> findByTeamId(int teamId); //have to be done
+    Cricketer findByCricketerId(int cricketerId);
+    List<Cricketer> findByTeam_TeamId(int teamId);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Cricketer c WHERE c.team.teamId = :teamId")
+    void deleteByTeamId(int teamId);
 }

@@ -1,19 +1,27 @@
 package com.edutech.progressive.entity;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Cricketer implements Comparable<Cricketer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cricketerId;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "team_id")
+    private Team team;
     private String cricketerName;
     private String nationality;
     private String role;
     private int totalWickets;
-    private int teamId;
+
+    // private int teamId;
     private int age;
     private int experience;
     private int total_runs;
@@ -28,7 +36,7 @@ public class Cricketer implements Comparable<Cricketer> {
         this.nationality = nationality;
         this.role = role;
         this.totalWickets = totalWickets;
-        this.teamId = teamId;
+        this.team.setTeamId(teamId);
         this.age = age;
         this.experience = experience;
         this.total_runs = totalRuns;
@@ -74,13 +82,15 @@ public class Cricketer implements Comparable<Cricketer> {
         this.totalWickets = totalWickets;
     }
 
-    public int getTeamId() {
-        return teamId;
-    }
+    // public int getTeamId() {
+    //     return teamId;
+    // }
 
-    public void setTeamId(int teamId) {
-        this.teamId = teamId;
-    }
+    // public void setTeamId(int teamId) {
+    //     this.teamId = teamId;
+    // }
+
+    
 
     public int getAge() {
         return age;
@@ -111,5 +121,12 @@ public class Cricketer implements Comparable<Cricketer> {
         this.total_runs = total_runs;
     }
 
-}
+    public Team getTeam() {
+        return team;
+    }
 
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+}

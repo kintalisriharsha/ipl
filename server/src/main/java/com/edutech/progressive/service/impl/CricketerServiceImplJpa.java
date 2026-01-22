@@ -1,6 +1,7 @@
 package com.edutech.progressive.service.impl;
 
 import java.sql.SQLException;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,43 +27,34 @@ public class CricketerServiceImplJpa implements CricketerService {
 
     @Override
     public Integer addCricketer(Cricketer cricketer) throws SQLException {
-        cricketerRepository.save(cricketer);
-        return getAllCricketers().size();
+        return cricketerRepository.save(cricketer).getCricketerId();
     }
 
     @Override
     public List<Cricketer> getAllCricketersSortedByExperience() throws SQLException {
-        return cricketerRepository.findAllByOrderByExperienceAsc();
+        List<Cricketer> sortedCricketer = cricketerRepository.findAll();
+        sortedCricketer.sort(Comparator.comparing(Cricketer::getExperience));
+        return sortedCricketer;
     }
 
     @Override
-    public Cricketer getCricketerById(int cricketerId) throws SQLException{
-        return cricketerRepository.findById(cricketerId).get();
-    }
-    
-    @Override
-    public void updateCricketer(Cricketer cricketer) throws SQLException{
-        Cricketer cricketerDetails = getCricketerById(cricketer.getCricketerId());
-        cricketerDetails.setCricketerId(cricketer.getCricketerId());
-        cricketerDetails.setTeamId(cricketer.getTeamId());
-        cricketerDetails.setCricketerName(cricketer.getCricketerName());
-        cricketerDetails.setAge(cricketer.getAge());
-        cricketerDetails.setNationality(cricketer.getNationality());
-        cricketerDetails.setRole(cricketer.getRole());
-        cricketerDetails.setTotal_runs(cricketer.getTotal_runs());
-        cricketerDetails.setTotalWickets(cricketer.getTotalWickets());
-        cricketerRepository.save(cricketerDetails);
+    public Cricketer getCricketerById(int cricketerId) throws SQLException {
+        return cricketerRepository.findByCricketerId(cricketerId);
     }
 
     @Override
-    public void deleteCricketer(int cricketerId) throws SQLException{
+    public void updateCricketer(Cricketer cricketer) throws SQLException {
+        cricketerRepository.save(cricketer);
+    }
+
+    @Override
+    public void deleteCricketer(int cricketerId) throws SQLException {
         cricketerRepository.deleteById(cricketerId);
     }
 
     @Override
-    public List<Cricketer> getCricketersByTeam(int teamId) throws SQLException{
-        return cricketerRepository.findByTeamId(teamId);
+    public List<Cricketer> getCricketersByTeam(int teamId) throws SQLException {
+        return cricketerRepository.findByTeam_TeamId(teamId);
     }
 
 }
-
