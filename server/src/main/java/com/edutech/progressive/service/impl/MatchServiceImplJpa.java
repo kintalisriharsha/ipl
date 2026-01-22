@@ -27,13 +27,12 @@ public class MatchServiceImplJpa implements MatchService{
 
     @Override
     public Match getMatchById(int matchId) throws SQLException {
-        return matchRepository.findById(matchId).get();
+        return matchRepository.findByMatchId(matchId);
     }
 
     @Override
     public Integer addMatch(Match match) throws SQLException {
-        matchRepository.save(match);
-        return getAllMatches().size();
+        return matchRepository.save(match).getMatchId();
     }
 
     @Override
