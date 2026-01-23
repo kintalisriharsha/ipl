@@ -1,6 +1,8 @@
 package com.edutech.progressive.controller;
 
 import com.edutech.progressive.entity.Team;
+import com.edutech.progressive.exception.TeamAlreadyExistsException;
+import com.edutech.progressive.exception.TeamDoesNotExistException;
 import com.edutech.progressive.service.impl.TeamServiceImplArraylist;
 import com.edutech.progressive.service.impl.TeamServiceImplJpa;
 
@@ -46,30 +48,43 @@ public class TeamController {
     }
 
     @GetMapping("/{teamId}")
-    public ResponseEntity<Team> getTeamById(@PathVariable int teamId) {
+    public ResponseEntity<?> getTeamById(@PathVariable int teamId) {
         try {
-            return new ResponseEntity<>(teamServiceImplJpa.getTeamById(teamId),HttpStatus.OK);
-        } catch (SQLException e) {
+            Team team  = teamServiceImplJpa.getTeamById(teamId);
+            return new ResponseEntity<>(team ,HttpStatus.OK);
+        } 
+        catch(TeamDoesNotExistException te){
+            return new ResponseEntity<>(te.getMessage(),HttpStatus.NOT_FOUND);
+        }
+        catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }  
 
     @PostMapping
-    public ResponseEntity<Integer> addTeam(@RequestBody Team team) {
+    public ResponseEntity<?> addTeam(@RequestBody Team team) {
         try {
             return new ResponseEntity<>(teamServiceImplJpa.addTeam(team),HttpStatus.CREATED);
-        } catch (SQLException e) {
+        } 
+        catch(TeamAlreadyExistsException te){
+            return new ResponseEntity<>(te.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/{teamId}")
-    public ResponseEntity<Void> updateTeam(@PathVariable int teamId, @RequestBody Team team) {
+    public ResponseEntity<?> updateTeam(@PathVariable int teamId, @RequestBody Team team) {
         try {
             team.setTeamId(teamId);
             teamServiceImplJpa.updateTeam(team);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (SQLException e) {
+        } 
+        catch(TeamAlreadyExistsException te){
+            return new ResponseEntity<>(te.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

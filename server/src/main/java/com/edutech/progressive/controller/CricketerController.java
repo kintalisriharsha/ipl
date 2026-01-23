@@ -1,6 +1,7 @@
 package com.edutech.progressive.controller;
 
 import com.edutech.progressive.entity.Cricketer;
+import com.edutech.progressive.exception.TeamCricketerLimitExceededException;
 import com.edutech.progressive.service.impl.CricketerServiceImplJpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,10 +49,14 @@ public class CricketerController {
     }
 
     @PostMapping
-    public ResponseEntity<Integer> addCricketer(@RequestBody Cricketer cricketer) {
+    public ResponseEntity<?> addCricketer(@RequestBody Cricketer cricketer) {
         try {
             return new ResponseEntity<>(cricketerServiceImplJpa.addCricketer(cricketer), HttpStatus.CREATED);
-        } catch (SQLException e) {
+        }
+        catch(TeamCricketerLimitExceededException te){
+            return new ResponseEntity<>(te.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

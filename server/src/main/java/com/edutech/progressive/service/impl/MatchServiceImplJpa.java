@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.edutech.progressive.entity.Match;
+import com.edutech.progressive.exception.NoMatchesFoundException;
 import com.edutech.progressive.repository.MatchRepository;
 import com.edutech.progressive.service.MatchService;
 
@@ -55,8 +56,12 @@ public class MatchServiceImplJpa implements MatchService{
     }
 
     @Override
-    public List<Match> getAllMatchesByStatus(String status) {
-        return matchRepository.findAllByStatus(status);
+    public List<Match> getAllMatchesByStatus(String status) throws NoMatchesFoundException{
+        List<Match> matchs = matchRepository.findAllByStatus(status);
+        if(matchs.isEmpty()){
+            throw new NoMatchesFoundException("Matches are not found for this status");
+        }
+        return matchs;
     }
 
 }

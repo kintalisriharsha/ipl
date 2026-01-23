@@ -17,7 +17,7 @@ import com.edutech.progressive.service.TeamService;
 public class TeamServiceImplJpa implements TeamService {
 
     private TeamRepository teamRepository;
-    
+
     @Autowired
     public TeamServiceImplJpa(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
@@ -29,10 +29,10 @@ public class TeamServiceImplJpa implements TeamService {
     }
 
     @Override
-    public int addTeam(Team team) throws SQLException {
-        // if(getTeamById(team.getTeamId()) != null){
-        //     throw new TeamAlreadyExistsException("Team already exists");
-        // }
+    public int addTeam(Team team) throws TeamAlreadyExistsException {
+        if (teamRepository.findByTeamName(team.getTeamName()) != null) {
+            throw new TeamAlreadyExistsException("Team already exists");
+        }
         return teamRepository.save(team).getTeamId();
     }
 
@@ -43,23 +43,27 @@ public class TeamServiceImplJpa implements TeamService {
         return teams;
     }
 
-    public Team getTeamById(int teamId) throws SQLException {
-        return teamRepository.findByTeamId(teamId);
+    public Team getTeamById(int teamId) throws TeamDoesNotExistException {
+
+        Team team = teamRepository.findByTeamId(teamId);
+        if (team == null) {
+            throw new TeamDoesNotExistException("Team does not exist.");
+        }
+        return team;
     }
 
     @Override
-    public void updateTeam(Team team) throws SQLException {
+    public void updateTeam(Team team) throws TeamAlreadyExistsException {
         Team teamDetails = getTeamById(team.getTeamId());
-        if(teamDetails != null){
-            teamDetails.setTeamName(team.getTeamName());
-            teamDetails.setOwnerName(team.getOwnerName());
-            teamDetails.setLocation(team.getLocation());
-            teamDetails.setEstablishmentYear(team.getEstablishmentYear());
-            teamRepository.save(teamDetails);
+        Team sameTeamName = teamRepository.findByTeamName(team.getTeamName());
+        if(sameTeamName != null && sameTeamName.getTeamId() != team.getTeamId()){
+            throw new TeamAlreadyExistsException("Team with the same name already exists");
         }
-        // else{
-        //     throw new TeamDoesNotExistException();
-        // }
+        teamDetails.setTeamName(team.getTeamName());
+        teamDetails.setOwnerName(team.getOwnerName());
+        teamDetails.setLocation(team.getLocation());
+        teamDetails.setEstablishmentYear(team.getEstablishmentYear());
+        teamRepository.save(teamDetails);
     }
 
     @Override
@@ -67,4 +71,3 @@ public class TeamServiceImplJpa implements TeamService {
         teamRepository.deleteById(teamId);
     }
 }
-
